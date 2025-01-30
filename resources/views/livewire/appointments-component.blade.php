@@ -297,6 +297,9 @@
                                 Referencia
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Nota
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Confirmada
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -354,6 +357,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $appointment->payment->ref ?? '' }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $appointment->note ?? '' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <p @class([
@@ -421,6 +427,9 @@
                                 Referencia
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Nota
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Cita para
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -475,6 +484,9 @@
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ $appointment->payment->ref ?? '' }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $appointment->note ?? '' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $appointment->picked_date)->translatedFormat('l, d F Y') }}
