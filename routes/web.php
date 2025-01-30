@@ -30,7 +30,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', LandingPageController::class)->name('home');
 Route::get('posts/{id}', PostView::class)->name('post.id');
-Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.email');
+Route::post('reset-password', [ResetPasswordController::class, 'resetPassword'])
+    ->name('password.email');
 
 Route::middleware([
     'auth:sanctum',
