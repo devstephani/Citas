@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Binnacle;
-use App\Models\package;
+use App\Models\Package;
 use App\Models\Service;
 use App\Rules\Text;
 use Illuminate\Support\Facades\Storage;
@@ -34,8 +34,8 @@ class PackageModal extends Component
             'price' => 'required|min:0.1|max:1000|numeric',
             'service_ids' => ['required', 'exists:services,id'],
             'image'  => [
-                'nullable',
-                Rule::when(!is_string($this->image), 'required|image|max:1024|mimes:jpg')
+                Rule::requiredIf(empty($this->id)),
+                Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg')
             ],
         ];
     }
@@ -75,7 +75,7 @@ class PackageModal extends Component
         $this->validate();
         $path = $this->image->store('public/packages');
 
-        $package = package::create([
+        $package = Package::create([
             'name' => $this->name,
             'description' => $this->description,
             'active' => 1,
