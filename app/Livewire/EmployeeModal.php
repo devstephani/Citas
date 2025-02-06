@@ -42,8 +42,8 @@ class EmployeeModal extends Component
                 Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()])
             ],
             'photo'  => [
-                'nullable',
-                Rule::when(!is_string($this->photo), 'required|image|max:1024|mimes:jpg')
+                Rule::requiredIf(empty($this->id)),
+                Rule::when(!is_string($this->photo), 'image|max:1024|mimes:jpg')
             ],
             'service_ids' => [
                 'nullable',

@@ -33,9 +33,9 @@ class ServiceModal extends Component
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
             'price' => 'required|min:0.1|max:1000|numeric',
             'type' => ['required', Rule::enum(TypeEnum::class)],
-            'image'  => [
-                'nullable',
-                Rule::when(!is_string($this->image), 'required|image|max:1024|mimes:jpg')
+            'image' => [
+                Rule::requiredIf(empty($this->id)),
+                Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg')
             ],
             'employee_ids' => [
                 'nullable',

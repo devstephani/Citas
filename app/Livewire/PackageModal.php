@@ -33,7 +33,7 @@ class PackageModal extends Component
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
             'price' => 'required|min:0.1|max:1000|numeric',
             'service_ids' => ['required', 'exists:services,id'],
-            'image'  => [
+            'image' => [
                 Rule::requiredIf(empty($this->id)),
                 Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg')
             ],
