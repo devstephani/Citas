@@ -15,16 +15,19 @@ class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
+    public $user, $token, $email;
     /**
      * Create a new message instance.
      */
-    public function __construct(User $user)
+    public function __construct(string $user, string $token, string $email)
     {
         $this->user = $user;
+        $this->token = $token;
+        $this->email = $email;
     }
 
-    public function build() {
+    public function build()
+    {
         return $this->view('emails.reset-password')->subject('Notificación de restablecimiento de contraseña');
     }
 }

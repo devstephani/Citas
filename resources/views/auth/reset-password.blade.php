@@ -19,26 +19,28 @@
             <!--Formulario de Login y registro-->
             <div class="contenedor__login-register">
                 <!--Login-->
-                <form method="POST" action="{{ route('user-password.update') }}">
+                <form method="POST" action="{{ route('password.update') }}">
                     @csrf
-                    @method('PUT')
 
-                    <input type="hidden" name="token" value="{{ $request->route('token') }}">
+                    <input type="hidden" name="token" value="{{ $token }}">
                     <h2>Restaurar contraseña</h2>
 
                     <div class="block">
-                        <x-input id="email" class="block w-full" type="email" name="email" :value="old('email', $request->email)"
+                        <x-input id="email" class="block w-full" type="email" name="email" :value="old('email', request()->input('email'))"
                             placeholder="usuario@email.com" required autofocus autocomplete="username" />
+                        <x-input-error for="email" class="mt-2" />
                     </div>
 
                     <div class="mt-4">
                         <x-input id="password" class="block w-full" type="password" name="password" required
                             placeholder="********" autocomplete="new-password" />
+                        <x-input-error for="password" class="mt-2" />
                     </div>
 
                     <div class="mt-4">
                         <x-input id="password_confirmation" placeholder="********" class="block w-full" type="password"
                             name="password_confirmation" required autocomplete="new-password" />
+                        <x-input-error for="password_confirmation" class="mt-2" />
                     </div>
                     <div class="text-center">
                         <a class="font-italic isai5" href="{{ route('login') }}">Iniciar sesión </a>

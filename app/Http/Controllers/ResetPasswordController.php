@@ -2,30 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Snowfire\Beautymail\Beautymail;
 
 class ResetPasswordController extends Controller
 {
     public function resetPassword(Request $request)
     {
         $user = User::where('email',  '=', $request->correo)->first();
-        
 
         if (!empty($user)) {
             try {
-                Password::sendResetLink(['email' => $request->correo]);
-                $mail = new ResetPassword($user);
-                Mail::to($user->email)->send($mail);
+                $status = Password::sendResetLink(['email' => $request->correo]);
 
-                return redirect()->back()->with('success', 'Se envió el código de recuperación al correo adjuntado.');
+                return $status === Password::RESET_LINK_SENT
+                    ? redirect()->back()->with('success', 'Se envió el código de recuperación al correo adjuntado.')
+                    : redirect()->back()->with('error', 'Hubo un problema al intentar enviar el correo.');
             } catch (\Throwable $th) {
-                return redirect()->back()->with('success', 'Se envió el código de recuperación al correo adjuntado.');
+                return redirect()->back()->with('error', 'Hubo un problema al intentar enviar el correo.');
             }
         }
 

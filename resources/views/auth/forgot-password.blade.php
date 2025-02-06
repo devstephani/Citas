@@ -22,15 +22,14 @@
                 <form method="POST" action="{{ route('password.email') }}">
                     @csrf
                     <h2>Recuperar contraseña</h2>
-                    <input type="email" style="display:none">
 
-                    @if (session()->has('success'))
-                        <p class="text-green-500">{{ session('success') }}</p>
+                    @if (session()->has('status'))
+                        <p class="text-green-500">{{ session('status') }}</p>
                     @endif
 
                     <x-label for="correo" value="{{ __('Email') }}" />
-                    <x-input id="correo" placeholder="Ej: correo@email.com" class="block mt-1 w-full" type="email"
-                        name="correo" :value="old('correo')" required autofocus />
+                    <x-input id="email" placeholder="Ej: correo@email.com" class="block mt-1 w-full" type="email"
+                        name="email" :value="old('email')" required autofocus />
                     <x-input-error for="email" class="mt-2" />
 
                     <div class="text-center">

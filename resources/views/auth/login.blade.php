@@ -4,15 +4,6 @@
 
 <x-guest-layout>
     <main>
-        @error('inactive')
-            <div class="mb-12 w-full">
-                <p
-                    class="z-50 block w-fit py-1.5 px-4 shadow-lg rounded-sm border border-neutral-400 mx-auto text-red-600 bg-white">
-                    {{ $message }}
-
-                </p>
-            </div>
-        @enderror
         <div class="contenedor__todo">
             <div class="mt-5 caja__trasera">
                 <div class="caja__trasera-login">
@@ -35,6 +26,18 @@
                 <form method="POST" action="{{ route('login') }}" class="formulario__login">
                     @csrf
                     <h2>Iniciar Sesión</h2>
+                    @if (session()->has('success'))
+                        <p class="block w-fit py-1.5 px-4 mx-auto text-green-500">
+                            {{ session('success') }}
+                        </p>
+                    @endif
+                    @error('inactive')
+                        <p class="block w-fit py-1.5 px-4 mx-auto text-red-600">
+                            {{ $message }}
+
+                        </p>
+                    @enderror
+
                     <x-input type="email" id="email" name="email" placeholder="Correo Electrónico" required
                         :value="old('email')" />
                     <x-input-error for="email" class="mt-2" />
