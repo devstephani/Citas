@@ -49,8 +49,12 @@ class AppointmentsComponent extends Component
     public function rules()
     {
         return [
-            'selected_service' => ['nullable', new OneRequired('selected_package'), 'exists:services,id'],
-            'selected_package' => ['nullable', new OneRequired('selected_service'), 'exists:packages,id'],
+            'selected_service' => [
+                Rule::when($this->selected_package === '' || $this->selected_package === null, [new OneRequired('selected_package', 'Debe seleccionar un servicio o paquete para continuar'), 'exists:services,id'])
+            ],
+            'selected_package' => [
+                Rule::when($this->selected_service === '' || $this->selected_service === null, [new OneRequired('selected_service', 'Debe seleccionar un paquete o servicio para continuar'), 'exists:packages,id'])
+            ],
             'selected_time' => ['required', 'date_format:H:i:s'],
             'status' => [
                 Rule::when(Auth::user()->hasRole('admin') && $this->id > 0, 'required|integer|min:0|max:2')
@@ -139,9 +143,9 @@ class AppointmentsComponent extends Component
         $this->status = $record->status;
         $this->note = $record->note;
         $this->registered_local = $record->registered_local;
-        $this->ref = $record->payment->ref;
-        $this->currency = $record->payment->currency->value;
-        $this->type = $record->payment->type->value;
+        $this->ref = $record->payment->ref ?? null;
+        $this->currency = $record->payment->currency->value ?? null;
+        $this->type = $record->payment->type->value ?? null;
         $this->modifying = $record->re_assigned;
     }
 
@@ -159,8 +163,14 @@ class AppointmentsComponent extends Component
             'note' => $this->note,
             're_assigned' => 0,
         ]);
-        $record->payment()->update([
-            'currency' => $this->currency,
+
+        $currencies = [
+            'PAYPAL' => 'DOLLAR',
+            'MOBILE' => 'CASH',
+        ];
+
+        $record->payment()->updateOrCreate([], [
+            'currency' => $this->type === 'FULL' ? $this->currency : $currencies[$this->type],
             'type' => $this->type,
             'ref' => $this->ref,
             'currency_api' => $this->currency_api
@@ -271,19 +281,28 @@ class AppointmentsComponent extends Component
             $this->validate();
 
             $user = User::find($this->client_id ?? Auth::user()->id);
-            Appointment::create([
+            $appointment = Appointment::create([
                 'status' => 0,
                 'user_id' => $user->id,
                 'service_id' => $this->selected_service ?? null,
                 'package_id' => $this->selected_package ?? null,
                 'picked_date' => $final_date,
                 'discount' => $this->discount
-            ])->payment()->create([
-                'currency' => $this->type === 'FULL' ? 'CASH' : $this->currency,
-                'type' => $this->type,
-                'ref' => $this->ref,
-                'currency_api' => $this->currency_api
             ]);
+
+            if ($this->type) {
+                $currencies = [
+                    'PAYPAL' => 'DOLLAR',
+                    'MOBILE' => 'CASH',
+                ];
+
+                $appointment->payment()->create([
+                    'currency' => $this->type === 'FULL' ? $this->currency : $currencies[$this->type],
+                    'type' => $this->type,
+                    'ref' => $this->ref,
+                    'currency_api' => $this->currency_api
+                ]);
+            }
 
             Binnacle::create([
                 'user_id' => auth()->id(),

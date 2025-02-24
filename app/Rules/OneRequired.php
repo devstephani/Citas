@@ -7,11 +7,12 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class OneRequired implements ValidationRule
 {
-    protected $other_field;
+    protected $other_field, $message;
 
-    public function __construct($other_field)
+    public function __construct($other_field, $message)
     {
         $this->other_field = $other_field;
+        $this->message = $message;
     }
 
     /**
@@ -22,7 +23,7 @@ class OneRequired implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (empty($value) && empty(request()->input($this->other_field))) {
-            $fail("Al menos :attribute o $this->other_field deben ser seleccionados");
+            $fail($this->message);
         }
     }
 }

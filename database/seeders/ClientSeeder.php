@@ -13,6 +13,14 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
+        User::create([
+            'active' => true,
+            'name' => 'Cliente',
+            'phone' => '04125512151',
+            'email' => 'cliente@email.com',
+            'password' => Hash::make('password'),
+        ])->assignRole('client');
+
         $phones = ['04121241212', '04144564545', '04161231231', '04247415421', '04124567832'];
         for ($i = 0; $i < 5; $i++) {
             User::create([
