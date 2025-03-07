@@ -1,6 +1,6 @@
 <div x-data="{ open: @entangle('showModal') }">
     <x-button wire:click="toggle" class="w-full sm:w-fit gap-3" title="Registrar publicación">
-        <x-lucide-plus class="size-5" />
+        <x-lucide-plus class="w-5 h-5" />
         Publicación
     </x-button>
 

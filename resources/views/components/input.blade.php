@@ -7,8 +7,8 @@
         ]) !!} x-bind:type="eye ? 'text' : 'password'" />
 
         <div class="absolute top-[65%] -translate-y-[50%] right-3 cursor-pointer" @click="eye = !eye">
-            <x-lucide-eye x-show="eye" class="size-4" />
-            <x-lucide-eye-off x-show="!eye" class="size-4" />
+            <x-lucide-eye x-show="eye" class="w-4 h-4" />
+            <x-lucide-eye-off x-show="!eye" class="w-4 h-4" />
         </div>
     </div>
 @else

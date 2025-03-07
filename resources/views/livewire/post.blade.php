@@ -56,15 +56,15 @@
                                     @endphp
                                     <p class="inline-flex items-center gap-3">
                                         {{ $reactions[0] }}
-                                        <x-lucide-thumbs-up class="size-4" />
+                                        <x-lucide-thumbs-up class="w-4 h-4" />
                                     </p>
                                     <p class="inline-flex items-center gap-3">
                                         {{ $reactions[1] }}
-                                        <x-lucide-thumbs-down class="size-4" />
+                                        <x-lucide-thumbs-down class="w-4 h-4" />
                                     </p>
                                     <p class="inline-flex items-center gap-3">
                                         {{ count($post->comments) }}
-                                        <x-lucide-message-circle class="size-4" />
+                                        <x-lucide-message-circle class="w-4 h-4" />
                                     </p>
                                 </div>
                             </td>
@@ -76,18 +76,18 @@
                                     @if ($post->active)
                                         <x-lucide-circle-check
                                             wire:click="$dispatch('toggle_active', { record: {{ $post->id }} })"
-                                            class="cursor-pointer size-5 text-green-700" title="Marcar inactivo" />
+                                            class="cursor-pointer w-5 h-5 text-green-700" title="Marcar inactivo" />
                                     @else
                                         <x-lucide-circle-slash
                                             wire:click="$dispatch('toggle_active', { record: {{ $post->id }} })"
-                                            class="cursor-pointer size-5 text-red-700" title="Marcar activo" />
+                                            class="cursor-pointer w-5 h-5 text-red-700" title="Marcar activo" />
                                     @endif
                                 @endrole
                                 @role('employee')
                                     @if ($post->active)
-                                        <x-lucide-circle-check class="size-5 text-green-700" />
+                                        <x-lucide-circle-check class="w-5 h-5 text-green-700" />
                                     @else
-                                        <x-lucide-circle-slash class="size-5 text-red-700" />
+                                        <x-lucide-circle-slash class="w-5 h-5 text-red-700" />
                                     @endif
                                 @endrole
                             </td>
@@ -97,15 +97,15 @@
                             <td class="px-6 py-4">
                                 <div class="flex gap-3">
                                     <a href="{{ route('post.id', $post->id) }}" title="Ver publicación">
-                                        <x-lucide-eye class="size-5 hover:text-blue-600 cursor-pointer" />
+                                        <x-lucide-eye class="w-5 h-5 hover:text-blue-600 cursor-pointer" />
                                     </a>
                                     @if (auth()->user()->hasRole('employee') && $post->user_id === auth()->id() || auth()->user()->hasRole('admin'))
-                                    <x-lucide-pencil class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-pencil class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('edit', { record: {{ $post->id }}})"
                                         title="Editar" />
                                         @endif
                                     @role('admin')
-                                        <x-lucide-trash class="size-5 hover:text-blue-600 cursor-pointer"
+                                        <x-lucide-trash class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                             onclick="delete_alert({{ $post->id }})" title="Eliminar" />
                                     @endrole
                                 </div>

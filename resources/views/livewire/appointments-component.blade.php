@@ -499,10 +499,10 @@
                                         @endphp
                                         @foreach ($options as $index)
                                             @if (!is_null($stars))
-                                                <x-lucide-star @class(['size-4', 'fill-yellow-400' => $stars >= $index]) title="1 estrella" />
+                                                <x-lucide-star @class(['w-4 h-4', 'fill-yellow-400' => $stars >= $index]) title="1 estrella" />
                                             @else
                                                 <x-lucide-star @class([
-                                                    'size-4',
+                                                    'w-4 h-4',
                                                     'cursor-pointer hover:fill-yellow-400' => is_null($stars),
                                                 ])
                                                     wire:click="rate({{ $index }}, {record: {{ $appointment->id }}})"

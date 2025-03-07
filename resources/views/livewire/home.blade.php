@@ -7,7 +7,7 @@
         <section class="p-4 grid grid-cols-1 sm:grid-cols-4 gap-4">
             <div class="col-span-full place-self-end">
                 <x-button type="button" wire:click="$dispatch('pdf')" class="w-full sm:w-fit gap-3">
-                    <x-lucide-file-text class="size-5" />
+                    <x-lucide-file-text class="w-5 h-5" />
                     Pagos
                 </x-button>
             </div>

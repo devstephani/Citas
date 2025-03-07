@@ -75,11 +75,11 @@
                                 @if ($employee->user->active)
                                     <x-lucide-circle-check
                                         wire:click="$dispatch('toggle_active', { employee: {{ $employee->id }} })"
-                                        class="cursor-pointer size-5 text-green-700" title="Marcar inactivo" />
+                                        class="cursor-pointer w-5 h-5 text-green-700" title="Marcar inactivo" />
                                 @else
                                     <x-lucide-circle-slash
                                         wire:click="$dispatch('toggle_active', { employee: {{ $employee->id }} })"
-                                        class="cursor-pointer size-5 text-red-700" title="Marcar activo" />
+                                        class="cursor-pointer w-5 h-5 text-red-700" title="Marcar activo" />
                                 @endif
                             </td>
                             <td class="px-6 py-4">
@@ -87,15 +87,15 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-3">
-                                    <x-lucide-file-text class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-file-text class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('employee_pdf', { record: {{ $employee->id }}})"
                                         title="Imprimir reporte" />
-                                    <x-lucide-calendar class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-calendar class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('see_attendances', { record: {{ $employee->id }}})"
                                         title="Asistencia" />
-                                    <x-lucide-pencil class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-pencil class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('edit', { record: {{ $employee->id }}})" title="Editar" />
-                                    <x-lucide-trash class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-trash class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         onclick="delete_alert({{ $employee->id }})" title="Eliminar" />
                                 </div>
                             </td>

@@ -37,7 +37,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-3">
-                                    <x-lucide-archive-restore class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-archive-restore class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('recover', { record: {{ $record['id'] }}, model: '{{ $record['model'] }}'})"
                                         title="Recuperar" />
                                 </div>

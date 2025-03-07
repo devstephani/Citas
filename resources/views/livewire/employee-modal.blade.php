@@ -41,12 +41,12 @@
 
     <div x-data="{ open: @entangle('showModal') }">
         <x-button type="button" wire:click="$dispatch('pdf')" class="w-full sm:w-fit gap-3" title="Imprimir reporte">
-            <x-lucide-file-text class="size-5" />
+            <x-lucide-file-text class="w-5 h-5" />
             Reportes
         </x-button>
         @role('admin')
             <x-button wire:click="toggle" class="w-full sm:w-fit gap-3" title="Registrar empleado">
-                <x-lucide-plus class="size-5" />
+                <x-lucide-plus class="w-5 h-5" />
                 Empleado
             </x-button>
         @endrole

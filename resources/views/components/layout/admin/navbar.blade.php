@@ -25,7 +25,7 @@
                             class="flex text-sm rounded-full focus:ring-2 focus:ring-neutral-700" aria-expanded="false"
                             data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
-                            <x-lucide-circle-user-round class="size-8" />
+                            <x-lucide-circle-user-round class="w-8 h-8" />
                         </button>
                     </div>
                     <div x-show="dropdown" x-transition

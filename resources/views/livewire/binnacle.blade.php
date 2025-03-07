@@ -32,13 +32,13 @@
                                 </th>
                                 <td class="px-6 py-4">
                                     @if ($log->status === 'success')
-                                        <x-lucide-circle-check class="size-4 text-green-600" title="Exitoso" />
+                                        <x-lucide-circle-check class="w-4 h-4 text-green-600" title="Exitoso" />
                                     @elseif ($log->status === 'warning')
-                                        <x-lucide-circle-alert class="size-4 text-yellow-600" title="Advertencia" />
+                                        <x-lucide-circle-alert class="w-4 h-4 text-yellow-600" title="Advertencia" />
                                     @elseif ($log->status === 'info')
-                                        <x-lucide-info class="size-4 text-blue-600" title="Información" />
+                                        <x-lucide-info class="w-4 h-4 text-blue-600" title="Información" />
                                     @else
-                                        <x-lucide-circle-x class="size-4 text-red-600" title="Hubo un error" />
+                                        <x-lucide-circle-x class="w-4 h-4 text-red-600" title="Hubo un error" />
                                     @endif
                                 </td>
                                 <td class="px-6 py-4">

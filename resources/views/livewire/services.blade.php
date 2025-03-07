@@ -32,7 +32,7 @@
                                         );
                                     @endphp
                                     <div class="flex items-center gap-3">
-                                        <x-lucide-star class="size-5 fill-yellow-400" />
+                                        <x-lucide-star class="w-5 h-5 fill-yellow-400" />
                                         <p class="mb-0">{{ $stars }}</p>
                                     </div>
                                     <p>{{ $service->description }}</p>
@@ -155,18 +155,18 @@
                                         @if ($service->active)
                                             <x-lucide-circle-check
                                                 wire:click="$dispatch('toggle_active', { service: {{ $service->id }} })"
-                                                class="cursor-pointer size-5 text-green-700" title="Marcar inactivo" />
+                                                class="cursor-pointer w-5 h-5 text-green-700" title="Marcar inactivo" />
                                         @else
                                             <x-lucide-circle-slash
                                                 wire:click="$dispatch('toggle_active', { service: {{ $service->id }} })"
-                                                class="cursor-pointer size-5 text-red-700" title="Marcar activo" />
+                                                class="cursor-pointer w-5 h-5 text-red-700" title="Marcar activo" />
                                         @endif
                                     @endrole
                                     @role('employee')
                                         @if ($service->active)
-                                            <x-lucide-circle-check class="size-5 text-green-700" />
+                                            <x-lucide-circle-check class="w-5 h-5 text-green-700" />
                                         @else
-                                            <x-lucide-circle-slash class="size-5 text-red-700" />
+                                            <x-lucide-circle-slash class="w-5 h-5 text-red-700" />
                                         @endif
                                     @endrole
                                 </td>
@@ -174,12 +174,12 @@
                                     <div class="flex gap-3">
 
                                         @if ($user->hasAnyRole(['admin', 'employee']) && $match)
-                                            <x-lucide-pencil class="size-5 hover:text-blue-600 cursor-pointer"
+                                            <x-lucide-pencil class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                                 wire:click="$dispatch('edit', { record: {{ $service->id }}})"
                                                 title="Editar" />
                                         @endif
                                         @role('admin')
-                                            <x-lucide-trash class="size-5 hover:text-blue-600 cursor-pointer"
+                                            <x-lucide-trash class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                                 onclick="delete_alert({{ $service->id }})" title="Eliminar" />
                                         @endrole
                                     </div>

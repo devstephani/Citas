@@ -9,7 +9,7 @@
                     'bg-neutral-200' => Route::is('dashboard'),
                 ])>
 
-                    <x-lucide-house class="size-5 " />
+                    <x-lucide-house class="w-5 h-5 " />
                     <span class="ms-3 ">Inicio</span>
                 </a>
             </li>
@@ -19,7 +19,7 @@
                     'bg-neutral-200' => Route::is('appointments'),
                 ])>
 
-                    <x-lucide-calendar class="size-5 " />
+                    <x-lucide-calendar class="w-5 h-5 " />
                     <span class="ms-3 ">Citas</span>
                 </a>
             </li>
@@ -29,7 +29,7 @@
                     'bg-neutral-200' => Route::is('services'),
                 ])>
 
-                    <x-lucide-bookmark class="size-5 " />
+                    <x-lucide-bookmark class="w-5 h-5 " />
                     <span class="ms-3 ">Servicios</span>
                 </a>
             </li>
@@ -39,7 +39,7 @@
                     'bg-neutral-200' => Route::is('packages'),
                 ])>
 
-                    <x-lucide-shopping-basket class="size-5 " />
+                    <x-lucide-shopping-basket class="w-5 h-5 " />
                     <span class="ms-3 ">Paquetes</span>
                 </a>
             </li>
@@ -50,7 +50,7 @@
                         'bg-neutral-200' => Route::is('employees'),
                     ])>
 
-                        <x-lucide-user class="size-5 " />
+                        <x-lucide-user class="w-5 h-5 " />
                         <span class="ms-3 ">Empleados</span>
                     </a>
                 </li>
@@ -60,7 +60,7 @@
                         'bg-neutral-200' => Route::is('clients'),
                     ])>
 
-                        <x-lucide-users class="size-5 " />
+                        <x-lucide-users class="w-5 h-5 " />
                         <span class="ms-3 ">Clientes</span>
                     </a>
                 </li>
@@ -71,7 +71,7 @@
                     'bg-neutral-200' => Route::is('posts'),
                 ])>
 
-                    <x-lucide-message-square class="size-5 " />
+                    <x-lucide-message-square class="w-5 h-5 " />
                     <span class="ms-3 ">Blog</span>
                 </a>
             </li>
@@ -81,7 +81,7 @@
                     'bg-neutral-200' => Route::is('virtual'),
                 ])>
 
-                    <x-lucide-image class="size-5 " />
+                    <x-lucide-image class="w-5 h-5 " />
                     <span class="ms-3 ">Probador virtual</span>
                 </a>
             </li>
@@ -92,7 +92,7 @@
                         'bg-neutral-200' => Route::is('trash'),
                     ])>
 
-                        <x-lucide-trash class="size-5 " />
+                        <x-lucide-trash class="w-5 h-5 " />
                         <span class="ms-3 ">Papelera</span>
                     </a>
                 </li>
@@ -104,7 +104,7 @@
                         'bg-neutral-200' => Route::is('binnacle'),
                     ])>
 
-                        <x-lucide-file-clock class="size-5 " />
+                        <x-lucide-file-clock class="w-5 h-5 " />
                         <span class="ms-3 ">Bitácora</span>
                     </a>
                 </li>
@@ -114,7 +114,7 @@
                         'bg-neutral-200' => Route::is('backup'),
                     ])>
 
-                        <x-lucide-database-backup class="size-5 " />
+                        <x-lucide-database-backup class="w-5 h-5 " />
                         <span class="ms-3 ">Respaldos</span>
                     </a>
                 </li>

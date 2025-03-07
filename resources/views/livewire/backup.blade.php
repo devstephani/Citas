@@ -7,7 +7,7 @@
         <div class="flex flex-col sm:flex-row justify-end gap-3">
             <div class="py-4 px-4 sm:p-4">
                 <x-button wire:click="save()">
-                    <x-lucide-save class="size-5" />
+                    <x-lucide-save class="w-5 h-5" />
                     Guardar
                 </x-button>
             </div>
@@ -39,10 +39,10 @@
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex gap-3">
-                                    <x-lucide-cloud-download class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-cloud-download class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('download', { record: '{{ $backup['key'] }}'})"
                                         title="Descargar" />
-                                    <x-lucide-trash class="size-5 hover:text-blue-600 cursor-pointer"
+                                    <x-lucide-trash class="w-5 h-5 hover:text-blue-600 cursor-pointer"
                                         wire:click="$dispatch('delete', { record: '{{ $backup['key'] }}'})"
                                         title="Eliminar" />
                                 </div>

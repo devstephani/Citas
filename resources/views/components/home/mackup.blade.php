@@ -26,15 +26,15 @@
                                     @endphp
                                     <p class="inline-flex items-center gap-3">
                                         {{ $reactions[0] }}
-                                        <x-lucide-thumbs-up class="size-4" />
+                                        <x-lucide-thumbs-up class="w-4 h-4" />
                                     </p>
                                     <p class="inline-flex items-center gap-3">
                                         {{ $reactions[1] }}
-                                        <x-lucide-thumbs-down class="size-4" />
+                                        <x-lucide-thumbs-down class="w-4 h-4" />
                                     </p>
                                     <p class="inline-flex items-center gap-3">
                                         {{ $post->comments()->where('active', 1)->count() }}
-                                        <x-lucide-message-circle class="size-4" />
+                                        <x-lucide-message-circle class="w-4 h-4" />
                                     </p>
                                 </div>
                                 <h3 class="text-xl">{{ $post->title }}</h3>

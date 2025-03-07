@@ -2,7 +2,7 @@
     <label for="table-search" class="sr-only">Buscador</label>
     <div class="w-full relative">
         <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-            <x-lucide-search class="size-3.5" />
+            <x-lucide-search class="w-3.5 h-3.5" />
         </div>
 
         <input type="password" name="password" style="display:none">
