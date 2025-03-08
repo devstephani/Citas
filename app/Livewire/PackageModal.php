@@ -26,9 +26,15 @@ class PackageModal extends Component
     public function rules()
     {
         return [
-            'name' => ['required', 'min:4', 'max:80', new Text(), Rule::unique('packages')->where(function ($query) {
-                return $query->where('name', $this->name);
-            })->ignore($this->id)],
+            'name' => [
+                'required',
+                'min:4',
+                'max:80',
+                new Text(),
+                Rule::unique('packages')->where(function ($query) {
+                    return $query->where('name', $this->name);
+                })->ignore($this->id)
+            ],
             'description' => ['required', 'min:10', 'max:150', new Text()],
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
             'price' => 'required|min:0.1|max:1000|numeric',
@@ -66,7 +72,7 @@ class PackageModal extends Component
             'image.mimes' => 'Debe tener formato JPG',
             'image.extensions' => 'Debe tener formato JPG',
             'service_ids.required' => 'Debe seleccionar al menos 1 opción',
-            'service_ids.exists' =>  'El servicio seleccionado no está registrado',
+            'service_ids.exists' => 'El servicio seleccionado no está registrado',
         ];
     }
 
@@ -98,7 +104,7 @@ class PackageModal extends Component
     public function toggle()
     {
         $this->resetUI();
-        $this->showModal = ! $this->showModal;
+        $this->showModal = !$this->showModal;
     }
 
     public function select_packages($id)
@@ -113,6 +119,7 @@ class PackageModal extends Component
 
     public function edit(package $record)
     {
+        $this->resetValidation();
         $this->showModal = true;
         $this->id = $record->id;
         $this->name = $record->name;
@@ -172,7 +179,7 @@ class PackageModal extends Component
     public function toggle_active(package $package)
     {
         $package->update([
-            'active' => ! $package->active
+            'active' => !$package->active
         ]);
 
         $message = $package->active ? 'activó' : 'desactivó';
@@ -198,6 +205,7 @@ class PackageModal extends Component
         $this->showModal = false;
         $this->service_ids = [];
         $this->dispatch('refreshParent')->to(Packages::class);
+        $this->resetValidation();
     }
 
     public function render()

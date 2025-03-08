@@ -25,9 +25,13 @@ class ClientModal extends Component
         return [
             'name' => ['required', 'min:4', 'max:80', new Text()],
             'phone' => ['required', 'numeric', 'digits:11', Rule::unique('users')->ignore($this->id)],
-            'email' => ['required', 'email', Rule::unique('users')->where(function ($query) {
-                return $query->where('email', $this->email);
-            })->ignore($this->id)],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->where(function ($query) {
+                    return $query->where('email', $this->email);
+                })->ignore($this->id)
+            ],
             'active' => [
                 'nullable',
                 Rule::when(!empty($this->id), 'required|boolean')
@@ -87,12 +91,13 @@ class ClientModal extends Component
     public function toggle()
     {
         $this->resetUI();
-        $this->showModal = ! $this->showModal;
+        $this->showModal = !$this->showModal;
     }
 
 
     public function edit(User $record)
     {
+        $this->resetValidation();
         $this->showModal = true;
         $this->id = $record->id;
         $this->name = $record->name;
@@ -138,7 +143,7 @@ class ClientModal extends Component
     public function toggle_active(User $user)
     {
         $user->update([
-            'active' => ! $user->active
+            'active' => !$user->active
         ]);
 
         $message = $user->active ? 'activó' : 'desactivó';
@@ -161,6 +166,7 @@ class ClientModal extends Component
         $this->id = '';
         $this->showModal = false;
         $this->dispatch('refreshParent')->to(Client::class);
+        $this->resetValidation();
     }
 
     public function user_pdf(User $record)

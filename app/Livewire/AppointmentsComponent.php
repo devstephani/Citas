@@ -113,7 +113,7 @@ class AppointmentsComponent extends Component
     public function toggle()
     {
         $this->resetUI();
-        $this->show_modal = ! $this->show_modal;
+        $this->show_modal = !$this->show_modal;
     }
 
     public function set_appointment(Appointment $record)
@@ -133,6 +133,7 @@ class AppointmentsComponent extends Component
 
     public function edit(Appointment $record)
     {
+        $this->resetValidation();
         $this->id = $record->id;
         $this->selected_service = $record->service_id;
         $this->selected_package = $record->package_id;
@@ -217,7 +218,8 @@ class AppointmentsComponent extends Component
         }, $appointments);
 
         $this->hours = array_filter($this->hours, function ($hour) use ($hours) {
-            if (!in_array($hour['value'], $hours)) return $hour;
+            if (!in_array($hour['value'], $hours))
+                return $hour;
         });
 
         $this->m_package = Package::find($this->selected_package);
@@ -242,7 +244,8 @@ class AppointmentsComponent extends Component
         }, $appointments);
 
         $this->hours = array_filter($this->hours, function ($hour) use ($hours) {
-            if (!in_array($hour['value'], $hours)) return $hour;
+            if (!in_array($hour['value'], $hours))
+                return $hour;
         });
 
         $this->m_service = Service::find($this->selected_service);
@@ -252,7 +255,7 @@ class AppointmentsComponent extends Component
     {
         $this->selected_date = $date;
         $today = now()->format('Y-m-d');
-        $selected_date = \Carbon\Carbon::createFromFormat('Y-m-d', $date)
+        $selected_date = Carbon::createFromFormat('Y-m-d', $date)
             ->dayOfWeek;
 
         $this->hours = $this->getAvailableHours($selected_date);
@@ -355,6 +358,7 @@ class AppointmentsComponent extends Component
         $this->type = null;
         $this->ref = null;
         $this->modifying = null;
+        $this->resetValidation();
     }
 
     public function getAvailableHours($today)
@@ -406,11 +410,11 @@ class AppointmentsComponent extends Component
             : (
                 $user->hasRole('employees')
                 ? Service::with('employees')
-                ->whereHas('employees', function ($query) use ($user) {
-                    $query->where('employee_id', $user->employee->id);
-                })
-                ->where('active', 1)
-                ->get()
+                    ->whereHas('employees', function ($query) use ($user) {
+                        $query->where('employee_id', $user->employee->id);
+                    })
+                    ->where('active', 1)
+                    ->get()
                 : Service::where('active', 1)->get()
             );
         $this->packages = Package::where('active', 1)->get();

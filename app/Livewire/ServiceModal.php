@@ -26,9 +26,15 @@ class ServiceModal extends Component
     public function rules()
     {
         return [
-            'name' => ['required', new Text(), 'min:4', 'max:80', Rule::unique('services')->where(function ($query) {
-                return $query->where('name', $this->name);
-            })->ignore($this->id)],
+            'name' => [
+                'required',
+                new Text(),
+                'min:4',
+                'max:80',
+                Rule::unique('services')->where(function ($query) {
+                    return $query->where('name', $this->name);
+                })->ignore($this->id)
+            ],
             'description' => ['required', 'min:10', 'max:150', new Text()],
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
             'price' => 'required|min:0.1|max:1000|numeric',
@@ -102,11 +108,12 @@ class ServiceModal extends Component
     public function toggle()
     {
         $this->resetUI();
-        $this->showModal = ! $this->showModal;
+        $this->showModal = !$this->showModal;
     }
 
     public function edit(service $record)
     {
+        $this->resetValidation();
         $this->showModal = true;
         $this->id = $record->id;
         $this->name = $record->name;
@@ -170,7 +177,7 @@ class ServiceModal extends Component
     public function toggle_active(Service $service)
     {
         $service->update([
-            'active' => ! $service->active
+            'active' => !$service->active
         ]);
 
         $message = $service->active ? 'activó' : 'desactivó';
@@ -197,6 +204,7 @@ class ServiceModal extends Component
         $this->available_employees = [];
         $this->showModal = false;
         $this->dispatch('refreshParent')->to(Services::class);
+        $this->resetValidation();
     }
 
     public function render()

@@ -42,7 +42,7 @@ class EmployeeModal extends Component
                 Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()]),
                 Rule::when(empty($this->id), ['required', Password::min(4)->max(12)->numbers()->letters()]),
             ],
-            'photo'  => [
+            'photo' => [
                 Rule::requiredIf(empty($this->id)),
                 Rule::when(!is_string($this->photo), 'image|max:1024|mimes:jpg,jpeg,png')
             ],
@@ -116,12 +116,13 @@ class EmployeeModal extends Component
     public function toggle()
     {
         $this->resetUI();
-        $this->showModal = ! $this->showModal;
+        $this->showModal = !$this->showModal;
         $this->show_attendance_modal = false;
     }
 
     public function edit(MEmployee $record)
     {
+        $this->resetValidation();
         $this->showModal = true;
         $this->id = $record->id;
         $this->name = $record->user->name;
@@ -195,7 +196,7 @@ class EmployeeModal extends Component
     public function toggle_active(MEmployee $employee)
     {
         $employee->user()->update([
-            'active' => ! $employee->user->active
+            'active' => !$employee->user->active
         ]);
 
         $message = $employee->user->active ? 'activó' : 'desactivó';
@@ -241,6 +242,7 @@ class EmployeeModal extends Component
         $this->employee = $record;
         $this->fetch_attendances();
         $this->show_attendance_modal = true;
+        $this->resetValidation();
     }
 
     public function resetUI()
@@ -259,6 +261,7 @@ class EmployeeModal extends Component
         $this->service_ids = [];
         $this->services = [];
         $this->dispatch('refreshParent')->to(Employee::class);
+        $this->resetValidation();
     }
 
     public function employee_pdf($record)

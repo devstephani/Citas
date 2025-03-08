@@ -28,7 +28,7 @@ class PostModal extends Component
             'description' => ['required', 'min:12', 'max:400', new Text()],
             'message' => 'required|min:10|max:2000',
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
-            'image'  => [
+            'image' => [
                 'nullable',
                 Rule::when(!is_string($this->image), 'required|image|max:1024|mimes:jpg,jpeg,png')
             ],
@@ -85,12 +85,13 @@ class PostModal extends Component
     public function toggle()
     {
         $this->resetUI();
-        $this->showModal = ! $this->showModal;
+        $this->showModal = !$this->showModal;
     }
 
 
     public function edit(MPost $record)
     {
+        $this->resetValidation();
         $this->showModal = true;
         $this->id = $record->id;
         $this->title = $record->title;
@@ -148,7 +149,7 @@ class PostModal extends Component
     public function toggle_active(MPost $record)
     {
         $record->update([
-            'active' => ! $record->active
+            'active' => !$record->active
         ]);
 
         $message = $record->active ? 'activó' : 'desactivó';
@@ -173,6 +174,7 @@ class PostModal extends Component
         $this->description = '';
         $this->showModal = false;
         $this->dispatch('refreshParent')->to(Post::class);
+        $this->resetValidation();
     }
 
     public function render()
