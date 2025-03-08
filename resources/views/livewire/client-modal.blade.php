@@ -1,7 +1,4 @@
 <div x-data="{ open: @entangle('showModal') }">
-    @if ($errors->getMessages())
-        @dd($errors)
-    @endif
     <x-button type="button" wire:click="$dispatch('pdf')" class="w-full sm:w-fit gap-3" title="Imprimir reporte">
         <x-lucide-file-text class="w-5 h-5" />
         Reportes

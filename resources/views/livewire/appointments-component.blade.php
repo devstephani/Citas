@@ -2,8 +2,6 @@
     Citas
 @endsection
 <div>
-    {{-- @dd($errors) --}}
-
     <div class="p-8 mt-20">
         <div x-data="{ open: @entangle('show_modal'), selectedService: false, selectedPackage: false }">
             <x-modal id="appointment-modal" maxWidth="md" wire:click="show_modal = true" wire:model.self="show_modal"
