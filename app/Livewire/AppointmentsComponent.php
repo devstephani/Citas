@@ -23,8 +23,10 @@ use Snowfire\Beautymail\Beautymail;
 
 class AppointmentsComponent extends Component
 {
-    #[Url]
-    public $service_id, $package_id;
+    #[Url(except: '')]
+    public $service_id;
+    #[Url(except: '')]
+    public $package_id;
     public $show_modal = false, $discount = false, $currentTimeFormatted, $modifying;
     public $id = 0, $currency_api = 0, $client_name, $client_id = null, $clients, $services, $packages, $selected_service = 0, $selected_package = 0, $m_service, $m_package, $selected_date, $selected_time, $status, $registered_local, $type, $currency, $ref, $frequent_appointments, $selected_frequent_appointment, $note = null;
 
@@ -65,7 +67,7 @@ class AppointmentsComponent extends Component
             ],
             'type' => [
                 'sometimes',
-                Rule::when($this->status === '1', [
+                Rule::when(empty($this->id), [
                     'required',
                     Rule::in(array_column(TypeEnum::cases(), 'value'))
                 ]),
@@ -78,7 +80,7 @@ class AppointmentsComponent extends Component
             ],
             'currency' => [
                 'sometimes',
-                Rule::when($this->status === '1', [
+                Rule::when(empty($this->id), [
                     'required',
                     Rule::in(array_column(CurrencyEnum::cases(), 'value'))
                 ]),
@@ -314,8 +316,8 @@ class AppointmentsComponent extends Component
             ]);
 
             $this->resetUI();
-            $this->package_id = null;
-            $this->service_id = null;
+            $this->package_id = '';
+            $this->service_id = '';
             $this->dispatch(event: 'refreshParent')->to(AppointmentsCalendar::class);
         } else {
             $selected = $this->selected_service

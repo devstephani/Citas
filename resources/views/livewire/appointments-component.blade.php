@@ -158,7 +158,7 @@
                             @php
                                 $service_price = $m_service->price ?? null;
                                 $package_price = $m_package->price ?? null;
-                                $base_price = ($service_price ?? $package_price) * ($this->discount ? 0.95 : 1);
+                                $base_price = ($service_price ?? $package_price) * ($discount ? 0.95 : 1);
                                 $price_to_bs = round($base_price * $currency_api, 2);
                             @endphp
                             <div class="col-span-full border border-neutral-400 p-4 rounded-md">
@@ -263,7 +263,7 @@
         <livewire:appointments-calendar week-starts-at="1" day-of-week-view="components/calendar-days-header"
             day-view="components/calendar-day" before-calendar-view="components/before-calendar-view" />
 
-        @if (Auth::user()->hasAnyRole(['admin', 'employee']))
+        @if (Auth::user()->hasAnyRole(['admin', 'employee']) && count ($appointments) > 0)
             <div class="p-4 overflow-x-auto shadow-md">
                 <table class="w-full text-sm text-left text-gray-400 bg-white rounded-md border border-neutral-400">
                     <thead class="border-b text-xs text-gray-700 uppercase bg-gray-50 font-extrabold">
@@ -393,7 +393,7 @@
                 @endif
             </div>
         @endif
-        @if (Auth::user()->hasRole('client'))
+        @if (Auth::user()->hasRole('client') && count($appointments) > 0)
             <div class="p-4 overflow-x-auto shadow-md">
                 <table class="w-full text-sm text-left text-gray-400 bg-white rounded-md border border-neutral-400">
                     <thead class="border-b text-xs text-gray-700 uppercase bg-gray-50 font-extrabold">
@@ -521,3 +521,16 @@
         @endif
     </div>
 </div>
+
+<script>
+    const elements = document.querySelectorAll("body *")
+    elements.forEach(el => {
+        if (el.textContent.includes('admin') && el.classList.contains('overflow-x-auto')) {
+            el.childNodes[0].remove()
+        }
+
+        if (el.textContent.includes('admin') && !el.lastElementChild) {
+            el.remove()
+        }
+    });
+</script>
