@@ -124,7 +124,7 @@
 
                         <x-label value="Imágen" for="photo" />
 
-                        <x-input type="file" wire:model="photo" accept=".jpg" />
+                        <x-input type="file" wire:model="photo" accept=".jpg,.png,.jpeg" />
 
                         <x-input-error for="photo" class="mt-2" />
                         @if (($photo && $id < 1) || ($photo && $prevImg !== $photo))

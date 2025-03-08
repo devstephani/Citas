@@ -30,24 +30,25 @@ class EmployeeModal extends Component
 
     public function rules()
     {
-        $employee_user = MEmployee::find($this->id)->user;
+        $employee_user = MEmployee::find($this->id)?->user;
         return [
             'name' => ['required', 'min:4', 'max:80', new Text()],
             'phone' => ['required', 'numeric', 'digits:11'],
             'description' => ['required', 'min:8', 'max:120', new Text()],
-            'email' => ['required', 'email', 'unique:users,email,' . $employee_user->id],
+            'email' => ['required', 'email', 'unique:users,email,' . $employee_user?->id],
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
             'password' => [
-                'nullable',
-                Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()])
+                'sometimes',
+                Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()]),
+                Rule::when(empty($this->id), ['required', Password::min(4)->max(12)->numbers()->letters()]),
             ],
             'photo'  => [
                 Rule::requiredIf(empty($this->id)),
-                Rule::when(!is_string($this->photo), 'image|max:1024|mimes:jpg')
+                Rule::when(!is_string($this->photo), 'image|max:1024|mimes:jpg,jpeg,png')
             ],
             'service_ids' => [
-                'nullable',
-                Rule::when($this->id > 0 && count($this->service_ids), 'required|exists:services,id')
+                'sometimes',
+                Rule::when(empty($this->id) && count($this->service_ids), 'required|exists:services,id')
             ]
         ];
     }

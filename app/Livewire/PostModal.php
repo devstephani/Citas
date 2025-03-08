@@ -30,7 +30,7 @@ class PostModal extends Component
             'active' => ['boolean', Rule::excludeIf($this->id == null)],
             'image'  => [
                 'nullable',
-                Rule::when(!is_string($this->image), 'required|image|max:1024|mimes:jpg')
+                Rule::when(!is_string($this->image), 'required|image|max:1024|mimes:jpg,jpeg,png')
             ],
         ];
     }

@@ -35,7 +35,7 @@ class ServiceModal extends Component
             'type' => ['required', Rule::enum(TypeEnum::class)],
             'image' => [
                 Rule::requiredIf(empty($this->id)),
-                Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg')
+                Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg,jpeg,png')
             ],
             'employee_ids' => [
                 'nullable',

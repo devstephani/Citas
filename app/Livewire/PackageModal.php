@@ -35,7 +35,7 @@ class PackageModal extends Component
             'service_ids' => ['required', 'exists:services,id'],
             'image' => [
                 Rule::requiredIf(empty($this->id)),
-                Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg')
+                Rule::when(!is_string($this->image), 'image|max:1024|mimes:jpg,jpeg,png')
             ],
         ];
     }
