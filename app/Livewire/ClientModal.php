@@ -30,11 +30,12 @@ class ClientModal extends Component
             })->ignore($this->id)],
             'active' => [
                 'nullable',
-                Rule::when(!is_null($this->id), 'required|boolean')
+                Rule::when(!empty($this->id), 'required|boolean')
             ],
             'password' => [
-                'nullable',
-                Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()])
+                'sometimes',
+                Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()]),
+                Rule::when(empty($this->id), ['required', Password::min(4)->max(12)->numbers()->letters()]),
             ],
         ];
     }
