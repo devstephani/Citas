@@ -24,9 +24,9 @@ use Snowfire\Beautymail\Beautymail;
 class AppointmentsComponent extends Component
 {
     #[Url(except: '')]
-    public $service_id;
+    public $service_id = '';
     #[Url(except: '')]
-    public $package_id;
+    public $package_id = '';
     public $show_modal = false, $discount = false, $currentTimeFormatted, $modifying;
     public $id = 0, $currency_api = 0, $client_name, $client_id = null, $clients, $services, $packages, $selected_service = 0, $selected_package = 0, $m_service, $m_package, $selected_date, $selected_time, $status, $registered_local, $type, $currency, $ref, $frequent_appointments, $selected_frequent_appointment, $note = null;
 

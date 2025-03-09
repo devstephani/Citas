@@ -261,7 +261,7 @@
         </div>
 
         <livewire:appointments-calendar week-starts-at="1" day-of-week-view="components/calendar-days-header"
-            day-view="components/calendar-day" before-calendar-view="components/before-calendar-view" />
+            day-view="components/calendar-day" before-calendar-view="components/before-calendar-view"  />
 
         @if (Auth::user()->hasAnyRole(['admin', 'employee']) && count ($appointments) > 0)
             <div class="p-4 overflow-x-auto shadow-md">

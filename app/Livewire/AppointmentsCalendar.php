@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Appointment;
-use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +15,9 @@ class AppointmentsCalendar extends LivewireCalendar
     public function events(): Collection
     {
         $query = Auth::user()->hasRole('client')
-            ?  Appointment::where('user_id', Auth::user()->id)
-            ->whereNot('status', 1)
-            ->get()
+            ? Appointment::where('user_id', Auth::user()->id)
+                ->whereNot('status', 1)
+                ->get()
             : (Auth::user()->hasRole('employee')
                 ? Appointment::where(function ($query) {
                     $query->whereNot('status', [1, 2])
@@ -38,7 +37,7 @@ class AppointmentsCalendar extends LivewireCalendar
                     $query->where('re_assigned', 1)
                         ->orWhereNot('status', 1);
                 })
-                ->get());
+                    ->get());
 
         return $query
             ->map(function (Appointment $appointment) {
@@ -80,6 +79,7 @@ class AppointmentsCalendar extends LivewireCalendar
         }
 
         $day = $day < 10 ? "0$day" : $day;
+        $month = $month < 10 ? "0$month" : $month;
         $date = "$year-$month-$day";
         $today = now()->format('Y-m-d');
 
