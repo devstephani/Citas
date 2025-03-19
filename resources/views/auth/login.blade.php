@@ -39,7 +39,7 @@
                     @enderror
 
                     <x-input type="email" id="email" name="email" placeholder="Correo Electrónico" required
-                        :value="old('email')" />
+                        value="{{ old('email') }}" />
                     <x-input-error for="email" class="mt-2" />
                     <div x-data="{ type: 'password' }" class="block mt-1 w-full relative">
                         <x-input type="password" id="password" name="password" placeholder="Contraseña" required

@@ -34,20 +34,20 @@
                 <form method="POST" action="{{ route('register') }}" class="formulario__login">
                     @csrf
                     <h2>Regístrarse</h2>
-                    <input required type="text" placeholder="Nombre" name="name" :value="old('name')">
+                    <input required type="text" placeholder="Nombre" name="name" value="{{ old('name') }}">
                     @error('name')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                             {{ $message }}
                         </p>
                     @enderror
-                    <input required type="number" placeholder="Teléfono" name="phone" :value="old('phone')">
+                    <input required type="number" placeholder="Teléfono" name="phone" value="{{ old('phone') }}">
                     @error('phone')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                             {{ $message }}
                         </p>
                     @enderror
                     <input required type="email" placeholder="Correo Electronico" name="email"
-                        :value="old('email')">
+                        value="{{ old('email') }}">
                     @error('email')
                         <p class="mt-2 text-sm text-red-600 dark:text-red-500">
                             {{ $message }}
