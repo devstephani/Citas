@@ -93,13 +93,15 @@ class Dashboard extends Component
         $client_bar_chart = (new ColumnChartModel())
             ->setTitle('Clientes registrados');
 
-        foreach ($clients as $key => $value) {
+        foreach ($clients as $value) {
+            $key = (int) substr($value['n_date'], 5) - 1;
             $client_bar_chart->addColumn($this->months[$key], $value->qty, $this->colors[$key]);
         }
         $employee_bar_chart = (new ColumnChartModel())
             ->setTitle('Empleados registrados');
 
-        foreach ($employees as $key => $value) {
+        foreach ($employees as $value) {
+            $key = (int) substr($value['n_date'], 5) - 1;
             $employee_bar_chart->addColumn($this->months[$key], $value->qty, $this->colors[$key]);
         }
 

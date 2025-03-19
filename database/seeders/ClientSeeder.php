@@ -29,7 +29,6 @@ class ClientSeeder extends Seeder
                 'phone' => $phones[$i],
                 'email' => fake()->email(),
                 'password' => Hash::make(fake()->password()),
-                'created_at' => now()
             ])->assignRole('client');
         }
     }
