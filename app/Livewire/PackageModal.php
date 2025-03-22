@@ -99,6 +99,7 @@ class PackageModal extends Component
         $package->services()->sync($this->service_ids);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Paquete $this->name registrado");
     }
 
     public function toggle()
@@ -161,6 +162,7 @@ class PackageModal extends Component
         $package->services()->sync($this->service_ids);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Paquete $this->name actualizado");
     }
 
     public function delete(package $record)

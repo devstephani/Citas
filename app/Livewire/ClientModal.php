@@ -16,7 +16,7 @@ class ClientModal extends Component
 {
     public $showModal = false;
     public $id = null;
-    public $name, $email, $password, $active, $phone;
+    public $name, $email, $password, $active, $phone, $ref, $doc = "V";
 
     protected $listeners = ['edit', 'toggle', 'toggle_active', 'delete', 'user_pdf'];
 
@@ -41,6 +41,8 @@ class ClientModal extends Component
                 Rule::when(!empty($this->password), ['required', Password::min(4)->max(12)->numbers()->letters()]),
                 Rule::when(empty($this->id), ['required', Password::min(4)->max(12)->numbers()->letters()]),
             ],
+            'ref' => ['required', 'regex:/^[0-9]+$/', 'max:10', 'min:6'],
+            'doc' => ['required', 'in:J,G,E,V'],
         ];
     }
 
@@ -65,6 +67,12 @@ class ClientModal extends Component
             'password.max' => 'Debe ser máximo :min caracteres',
             'password.numbers' => 'Debe ser contener al menos 1 número',
             'password.letters' => 'Debe ser contener al menos 1 letra',
+            'ref.required' => 'Debe indicar la cédula',
+            'ref.regex' => 'Debe contener solo dígitos',
+            'ref.max' => 'Debe contener máximo 10 dígitos',
+            'ref.min' => 'Debe contener mínimo 6 dígitos',
+            'doc.required' => 'Debe seleccionar un tipo de documento',
+            'doc.in' => 'La opción seleccionada es inválida'
         ];
     }
 
@@ -77,6 +85,8 @@ class ClientModal extends Component
             'phone' => $this->phone,
             'email' => $this->email,
             'password' => Hash::make($this->password),
+            'ref' => $this->ref,
+            'doc' => $this->doc
         ])->assignRole('client');
 
         Binnacle::create([
@@ -86,6 +96,7 @@ class ClientModal extends Component
         ]);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Cliente $this->name registrado");
     }
 
     public function toggle()
@@ -103,6 +114,8 @@ class ClientModal extends Component
         $this->name = $record->name;
         $this->phone = $record->phone;
         $this->email = $record->email;
+        $this->ref = $record->ref;
+        $this->doc = $record->doc;
         $this->active = $record->active;
     }
 
@@ -116,7 +129,9 @@ class ClientModal extends Component
             'email' => $this->email,
             'phone' => $this->phone,
             'password' => Hash::make($this->password),
-            'active' => $this->active
+            'active' => $this->active,
+            'ref' => $this->ref,
+            'doc' => $this->doc
         ]);
 
         Binnacle::create([
@@ -126,6 +141,7 @@ class ClientModal extends Component
         ]);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Cliente $this->name actualizado");
     }
 
     public function delete(User $record)

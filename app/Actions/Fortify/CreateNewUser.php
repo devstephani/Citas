@@ -21,10 +21,12 @@ class CreateNewUser implements CreatesNewUsers
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'numeric', 'digits:11'],
+            'phone' => ['required', 'regex:/^[0-9]+$/', 'digits:11'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            'ref' => ['required', 'regex:/^[0-9]+$/', 'max:10', 'min:6'],
+            'doc' => ['required', 'in:J,G,E,V'],
         ], $this->messages())->validate();
 
         return User::create([
@@ -32,6 +34,8 @@ class CreateNewUser implements CreatesNewUsers
             'phone' => $input['phone'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
+            'ref' => $input['ref'],
+            'doc' => $input['doc'],
         ])->assignRole('client');
     }
 
@@ -42,7 +46,7 @@ class CreateNewUser implements CreatesNewUsers
             'name.string' => 'Debe ser un texto',
             'name.max' => 'Debe contener máximo :max caracteres',
             'phone.required' => 'Debe indicar el teléfono',
-            'phone.numeric' => 'Debe ser un número',
+            'phone.regex' => 'Debe contener solo dígitos',
             'phone.digits' => 'Debe contener 11 dígitos',
             'email.required' => 'Debe indicar el correo electrónico',
             'email.string' => 'Debe ser un texto',
@@ -51,6 +55,12 @@ class CreateNewUser implements CreatesNewUsers
             'email.unique' => 'Este correo ya se encuentra registrado',
             'password.required' => 'Debe indicar la contraseña',
             'password.string' => 'Debe ser un texto',
+            'ref.required' => 'Debe indicar la cédula',
+            'ref.regex' => 'Debe contener solo dígitos',
+            'ref.max' => 'Debe contener máximo 10 dígitos',
+            'ref.min' => 'Debe contener mínimo 6 dígitos',
+            'doc.required' => 'Debe seleccionar un tipo de documento',
+            'doc.in' => 'La opción seleccionada es inválida'
         ];
     }
 }

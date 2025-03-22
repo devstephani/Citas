@@ -199,6 +199,8 @@ class AppointmentsComponent extends Component
 
         $this->dispatch(event: 'refreshParent')->to(AppointmentsCalendar::class);
         $this->resetUI();
+        $appointment = $record->service->name ?? $record->package->name;
+        $this->dispatch('show_alert', "Cita ($appointment) actualizada");
     }
 
     public function updatedSelectedPackage()
@@ -283,6 +285,15 @@ class AppointmentsComponent extends Component
             ->exists();
 
         if (!$occupied) {
+            if ($this->type && $this->type !== 'FULL') {
+                $currencies = [
+                    'PAYPAL' => 'DOLLAR',
+                    'MOBILE' => 'CASH',
+                ];
+
+                $this->currency = $currencies[$this->type];
+            }
+
             $this->validate();
 
             $user = User::find($this->client_id ?? Auth::user()->id);
@@ -296,13 +307,8 @@ class AppointmentsComponent extends Component
             ]);
 
             if ($this->type) {
-                $currencies = [
-                    'PAYPAL' => 'DOLLAR',
-                    'MOBILE' => 'CASH',
-                ];
-
                 $appointment->payment()->create([
-                    'currency' => $this->type === 'FULL' ? $this->currency : $currencies[$this->type],
+                    'currency' => $this->currency,
                     'type' => $this->type,
                     'ref' => $this->ref,
                     'currency_api' => $this->currency_api
@@ -319,6 +325,9 @@ class AppointmentsComponent extends Component
             $this->package_id = '';
             $this->service_id = '';
             $this->dispatch(event: 'refreshParent')->to(AppointmentsCalendar::class);
+
+            $appointment = $appointment->service->name ?? $appointment->package->name;
+            $this->dispatch('show_alert', "Cita ($appointment) registrada");
         } else {
             $selected = $this->selected_service
                 ? $this->services->find($this->selected_service)->first()->name
@@ -451,6 +460,8 @@ class AppointmentsComponent extends Component
     public function confirm(Appointment $record)
     {
         $record->update(['accepted' => 1]);
+        $appointment = $record->service->name ?? $record->package->name;
+        $this->dispatch('show_alert', "Cita ($appointment) confirmada");
     }
 
     public function modify(Appointment $record)
@@ -486,7 +497,7 @@ class AppointmentsComponent extends Component
                 ->get();
         }
 
-        $this->registered_local = auth()->user()->hasRole('admin');
+        $this->registered_local = !auth()->user()->hasRole('client');
         $appointments = [];
         $user = auth()->user();
         if ($user->hasRole('admin')) {

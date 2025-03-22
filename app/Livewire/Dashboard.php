@@ -37,6 +37,10 @@ class Dashboard extends Component
         if (auth()->user()->hasRole('client')) {
             return redirect()->route('home');
         }
+
+        if (auth()->user()->hasRole('employee')) {
+            return redirect()->route('appointments');
+        }
     }
 
     public function pdf()

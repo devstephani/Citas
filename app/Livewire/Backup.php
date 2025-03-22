@@ -54,6 +54,8 @@ class Backup extends Component
             'status' => 'info',
             'message' => "Se guardó un respaldo de la base de datos"
         ]);
+
+        $this->dispatch('show_alert', "Respaldo generado");
     }
 
     public function delete($record)

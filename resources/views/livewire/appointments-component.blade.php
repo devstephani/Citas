@@ -98,7 +98,6 @@
                                     <x-input-error for="selected_service" class="mt-2" />
                                 </div>
                             @endif
-                            @hasanyrole(['admin', 'client'])
                                 @if (is_null($selected_service))
                                     <div class="col-span-full">
                                         <x-label value="Paquetes" for="selected_package" />
@@ -118,7 +117,6 @@
                                         <x-input-error for="selected_package" class="mt-2" />
                                     </div>
                                 @endif
-                            @endhasanyrole
                             <div class="col-span-full">
                                 <x-label value="Hora" for="selected_time" />
                                 <x-select wire:model.live="selected_time" id="selected_time" name="selected_time"

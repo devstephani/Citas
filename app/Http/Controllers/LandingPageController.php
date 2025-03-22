@@ -21,7 +21,7 @@ class LandingPageController extends Controller
                 $q->where('active', '=', 1);
             })
             ->get();
-        $posts = Post::where('active',  1)
+        $posts = Post::where('active', 1)
             ->orderByDesc('created_at')
             ->paginate(10);
 

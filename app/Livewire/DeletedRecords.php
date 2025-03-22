@@ -22,38 +22,61 @@ class DeletedRecords extends Component
 
     public function recover($record, $model)
     {
+        $name = "";
         switch ($model) {
             case 'Cliente':
-                User::withTrashed()
-                    ->find($record)->restore();
+                $client = User::withTrashed()
+                    ->find($record);
+                $client->restore();
+
+                $name = "cliente, ($client->name)";
                 break;
             case 'Empleado':
-                Employee::withTrashed()
-                    ->find($record)->restore();
+                $employee = Employee::withTrashed()
+                    ->find($record);
+                $employee->restore();
+
+                $employee_name = $employee->user->name;
+                $name = "empleado, ($employee_name)";
                 break;
             case 'Servicio':
-                Service::withTrashed()
-                    ->find($record)->restore();
+                $service = Service::withTrashed()
+                    ->find($record);
+                $service->restore();
+
+                $name = "servicio, ($service->name)";
                 break;
             case 'Paquete':
-                Package::withTrashed()
-                    ->find($record)->restore();
+                $package = Package::withTrashed()
+                    ->find($record);
+                $package->restore();
+
+                $name = "paquete, ($package->name)";
                 break;
             case 'Publicación':
-                Post::withTrashed()
-                    ->find($record)->restore();
+                $post = Post::withTrashed()
+                    ->find($record);
+                $post->restore();
+
+                $name = "publicación, ($post->title)";
                 break;
             case 'Comentario':
-                Comment::withTrashed()
-                    ->find($record)->restore();
+                $comment = Comment::withTrashed()
+                    ->find($record);
+                $comment->restore();
+
+                $name = "comentario, ($comment->content)";
                 break;
             case 'Cita':
-                Appointment::withTrashed()
-                    ->find($record)->restore();
-                break;
+                $appointment = Appointment::withTrashed()
+                    ->find($record);
+                $appointment->restore();
 
+                $client = $appointment->user->name;
+                $name = $appointment->service->name ?? $appointment->package->name;
+                $name = "cita, ($appointment - $client)";
+                break;
             default:
-                # code...
                 break;
         }
 
@@ -62,6 +85,8 @@ class DeletedRecords extends Component
             'status' => 'info',
             'message' => "Se recuperó un registro ({$model})"
         ]);
+
+        $this->dispatch('show_alert', "Registro de tipo $name recuperado");
     }
 
     public function mount()

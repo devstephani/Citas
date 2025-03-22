@@ -31,7 +31,9 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
-        'active'
+        'active',
+        'ref',
+        'doc'
     ];
 
     /**
@@ -63,6 +65,14 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function getIdentificationAttribute()
+    {
+        $ref = number_format($this->ref, 0, ',', '.');
+        $ref = str_pad($ref, strlen($this->ref), '0', STR_PAD_LEFT);
+        $ref = str_replace(',', '', $ref);
+        return "$this->doc-$ref";
+    }
 
     public function services()
     {

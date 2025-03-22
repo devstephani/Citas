@@ -39,6 +39,25 @@
                             id="email" name="email" class="w-full" autocomplete="off" required />
                         <x-input-error for="email" class="mt-2" />
                     </div>
+                    <div class="flex gap-3">
+                        <div class="flex-col flex-shrink-0 w-1/4">
+                            <x-label value="Tipo de documento" for="doc" />
+                            <x-select wire:model.lazy="doc" type="email" no_default
+                                id="doc" name="doc" class="w-full" required>
+                                <option value="V" selected>V</option>
+                                <option value="E">E</option>
+                                <option value="J">J</option>
+                                <option value="G">G</option>
+                            </x-select>
+                            <x-input-error for="doc" class="mt-2" />
+                        </div>
+                        <div class="flex-col flex-shrink w-full">
+                            <x-label value="Cédula" for="ref" />
+                            <x-input placeholder="Ej: 10210100" wire:model.lazy="ref" type="text"
+                                id="ref" name="ref" class="w-full" required maxlength="11" minlength="6" />
+                            <x-input-error for="ref" class="mt-2" />
+                        </div>
+                    </div>
                     <div class="block">
                         <x-label value="Contraseña" for="password" />
                         <x-input placeholder="Ej: *********" wire:model.lazy="password" type="password" id="password"

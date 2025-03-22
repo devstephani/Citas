@@ -3,6 +3,7 @@
     aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
         <ul class="space-y-2 font-medium">
+            @role(['admin', 'client'])
             <li>
                 <a href="{{ route('dashboard') }}" @class([
                     'flex items-center p-2 rounded-lg hover:bg-neutral-200',
@@ -13,6 +14,7 @@
                     <span class="ms-3 ">Inicio</span>
                 </a>
             </li>
+            @endrole
             <li>
                 <a href="{{ route('appointments') }}" @class([
                     'flex items-center p-2 rounded-lg hover:bg-neutral-200',

@@ -22,7 +22,7 @@ class EmployeeModal extends Component
 
     public $showModal = false, $show_attendance_modal = false;
     public $id = null, $employee_attendances, $employee;
-    public $name, $email, $password, $active, $phone, $prevImg, $description, $available_services = [], $service_ids = [], $services = [];
+    public $name, $email, $password, $active, $phone, $ref, $doc = "V", $prevImg, $description, $available_services = [], $service_ids = [], $services = [];
     public $current_date, $initial_date, $attendance_date;
     public $photo;
 
@@ -49,7 +49,9 @@ class EmployeeModal extends Component
             'service_ids' => [
                 'sometimes',
                 Rule::when(empty($this->id) && count($this->service_ids), 'required|exists:services,id')
-            ]
+            ],
+            'ref' => ['required', 'regex:/^[0-9]+$/', 'max:10', 'min:6'],
+            'doc' => ['required', 'in:J,G,E,V'],
         ];
     }
 
@@ -82,6 +84,12 @@ class EmployeeModal extends Component
             'phone.required' => 'Debe indicar el teléfono',
             'phone.numeric' => 'Debe ser un número',
             'phone.digits' => 'Debe contener 11 dígitos',
+            'ref.required' => 'Debe indicar la cédula',
+            'ref.regex' => 'Debe contener solo dígitos',
+            'ref.max' => 'Debe contener máximo 10 dígitos',
+            'ref.min' => 'Debe contener mínimo 6 dígitos',
+            'doc.required' => 'Debe seleccionar un tipo de documento',
+            'doc.in' => 'La opción seleccionada es inválida'
         ];
     }
 
@@ -94,7 +102,9 @@ class EmployeeModal extends Component
             'name' => $this->name,
             'email' => $this->email,
             'password' => Hash::make($this->password),
-            'phone' => $this->phone
+            'phone' => $this->phone,
+            'ref' => $this->ref,
+            'doc' => $this->doc
         ])->assignRole('employee');
 
         $employee = $user->employee()
@@ -111,6 +121,7 @@ class EmployeeModal extends Component
         $employee->services()->sync($this->service_ids);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Empleado $this->name actualizado");
     }
 
     public function toggle()
@@ -128,6 +139,8 @@ class EmployeeModal extends Component
         $this->name = $record->user->name;
         $this->email = $record->user->email;
         $this->phone = $record->user->phone;
+        $this->ref = $record->user->ref;
+        $this->doc = $record->user->doc;
         $this->active = $record->user->active;
         $this->description = $record->description;
         $this->photo = $record->photo;
@@ -159,7 +172,9 @@ class EmployeeModal extends Component
             'name' => $this->name,
             'email' => $this->email,
             'active' => $this->active,
-            'phone' => $this->phone
+            'phone' => $this->phone,
+            'ref' => $this->ref,
+            'doc' => $this->doc
         ]);
 
         if (!empty($this->password)) {
@@ -175,6 +190,7 @@ class EmployeeModal extends Component
         ]);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Empleado $this->name actualizado");
     }
 
     public function delete(MEmployee $record)

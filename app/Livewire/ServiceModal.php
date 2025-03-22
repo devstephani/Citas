@@ -95,7 +95,6 @@ class ServiceModal extends Component
 
         $service->employees()->sync($this->employee_ids);
 
-
         Binnacle::create([
             'user_id' => auth()->id(),
             'status' => 'success',
@@ -103,6 +102,7 @@ class ServiceModal extends Component
         ]);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Servicio $this->name registrado");
     }
 
     public function toggle()
@@ -159,6 +159,7 @@ class ServiceModal extends Component
         ]);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Servicio $this->name actualizado");
     }
 
     public function delete(Service $record)

@@ -6,14 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
     <title>
         @yield('page-title') | {{ config('app.name') }}
     </title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
@@ -27,8 +24,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dark.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sweetalert.min.css') }}">
 
-    <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
@@ -92,20 +89,23 @@
     <script src="{{ asset('js/ofi.min.js') }}"></script>
     <script src="{{ asset('js/jarallax.min.js') }}"></script>
     <script src="{{ asset('js/ajaxchimp.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('js/custom.js') }}"></script>
     <script src="{{ asset('js/pages/index.js') }}"></script>
 
     <script>
-        function alertaSW(Mensaje, tipo) {
+        document.addEventListener('DOMContentLoaded', function () {
+            window.Livewire.on('show_alert', msg => {
+                show_alert(msg)
+            })
+        })
+
+        function show_alert(Mensaje) {
             Swal.fire({
-                position: "top-end",
-                icon: tipo,
+                icon: 'success',
                 title: Mensaje,
                 showConfirmButton: false,
                 timer: 2500,
-                toast: true
-
             });
         }
 
@@ -125,6 +125,7 @@
                         record: id
                     })
                     swal.close()
+                    Livewire.dispatch('show_alert', 'Registro borrado')
                 }
             })
         }

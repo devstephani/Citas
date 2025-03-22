@@ -42,7 +42,7 @@
                             @foreach ($packages as $package)
                                 <tr>
                                     <td class="text-center">
-                                        <h6>{{ \Carbon\Carbon::createFromFormat('Y-m-d h:i:s', $package->picked_date)->format('d-m-Y h:i a') }}
+                                        <h6>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $package->picked_date)->format('d-m-Y h:i a') }}
                                         </h6>
                                     </td>
                                     <td class="text-center">

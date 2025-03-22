@@ -1,0 +1,29 @@
+/* latin */
+@font-face {
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 400;
+    font-stretch: 100%;
+    font-display: swap;
+    src: url("../fonts/Figtree-Medium.ttf") format("ttf");
+}
+
+/* latin */
+@font-face {
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 500;
+    font-stretch: 100%;
+    font-display: swap;
+    src: url("../fonts/Figtree-Regular.ttf") format("ttf");
+}
+
+/* latin */
+@font-face {
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 600;
+    font-stretch: 100%;
+    font-display: swap;
+    src: url("../fonts/Figtree-SemiBold.ttf") format("ttf");
+}

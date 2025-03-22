@@ -80,6 +80,7 @@ class PostModal extends Component
 
         $this->resetUI();
         $this->dispatch('clean', ['content' => '']);
+        $this->dispatch('show_alert', "Publicación $this->title registrada");
     }
 
     public function toggle()
@@ -132,6 +133,7 @@ class PostModal extends Component
         ]);
 
         $this->resetUI();
+        $this->dispatch('show_alert', "Publicación $this->title actualizada");
     }
 
     public function delete(MPost $record)
