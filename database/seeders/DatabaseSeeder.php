@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use AttendancesTableSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
             CommentsTableSeeder::class,
             ReactionsTableSeeder::class,
             FavoritesTableSeeder::class,
+            AttendancesTableSeeder::class,
             BinnaclesTableSeeder::class,
         ]);
     }

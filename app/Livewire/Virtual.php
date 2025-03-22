@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Treinetic\ImageArtist\lib\Image;
 
 class Virtual extends Component
 {
@@ -69,58 +68,14 @@ class Virtual extends Component
 
         if ($side === 'eyeslashes') {
             $this->browslashes = false;
-            $this->eyeslashes = ! $this->eyeslashes;
+            $this->eyeslashes = !$this->eyeslashes;
         } else {
             $this->eyeslashes = false;
-            $this->browslashes = ! $this->browslashes;
+            $this->browslashes = !$this->browslashes;
         }
 
         $this->prev_state = $side;
         $this->show_template = true;
-    }
-
-    public function save()
-    {
-        $aspect_ratio = 520 / 75;
-        $file_name = 'result_image.jpeg';
-        $base = '';
-
-        if ($this->photo) {
-            $base = $this->photo->getRealPath();
-        } else {
-            $base = Storage::disk('templates')->files('img/templates')[0];
-        }
-
-        $img = new Image($base);
-        $eyeslashes_image = $this->selected_eyeslashes !== '' ? new Image($this->selected_eyeslashes) : '';
-        $browslashes_image = $this->selected_browslashes !== '' ? new Image($this->selected_browslashes) : '';
-
-        $img->scaleToWidth(384);
-        $img->scaleToHeight(384);
-
-        if ($this->selected_eyeslashes !== '') {
-            $eyeslashes_image->resize($this->eyeslashes_size * $aspect_ratio * 4, $this->eyeslashes_size * 4);
-            $img->merge($eyeslashes_image, $this->eyeslashes_position['x'] * 3.3, $this->eyeslashes_position['y'] * 1.6);
-        }
-
-        if ($this->selected_browslashes !== '') {
-            $browslashes_image->resize($this->browslashes_size * $aspect_ratio * 4, $this->browslashes_size * 4);
-            $img->merge($browslashes_image, $this->browslashes_position['x'] * 3.3, $this->browslashes_position['y'] * 1.6);
-        }
-
-        $img->save($file_name, IMAGETYPE_JPEG);
-
-        $file_path = public_path() . "/$file_name";
-
-        // $this->resetUI();
-
-        if (file_exists($file_path)) {
-            return response()->download($file_path)
-                ->deleteFileAfterSend(true);
-        } else {
-            $this->show_alert = true;
-            session()->put('alert', 'No se encontró la imágen, por favor intente de nuevo');
-        }
     }
 
     public function resetUI()

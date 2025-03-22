@@ -57,14 +57,15 @@
     @endif
 
     @hasanyrole(['admin', 'employee'])
-        <div x-data="{ open: false, desktop: window.innerWidth >= 640 }" x-init="window.addEventListener('resize', () => desktop = window.innerWidth >= 640)">
-            <x-layout.admin.navbar />
-            <x-layout.admin.sidebar />
+    <div x-data="{ open: false, desktop: window.innerWidth >= 640 }"
+        x-init="window.addEventListener('resize', () => desktop = window.innerWidth >= 640)">
+        <x-layout.admin.navbar />
+        <x-layout.admin.sidebar />
 
-            <div class="pb-4 mt-16 sm:ml-64 bg-neutral-100 min-h-[calc(100dvh-6.8dvh)]">
-                {{ $slot }}
-            </div>
+        <div class="pb-4 mt-16 sm:ml-64 bg-neutral-100 min-h-[calc(100dvh-6.8dvh)]">
+            {{ $slot }}
         </div>
+    </div>
     @endhasallroles
 
     @if (is_null(Auth::user()) || Auth::user()->hasRole('client'))
@@ -76,8 +77,7 @@
         </div>
     @endif
 
-    /*
-    <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script> */
+    @yield('js')
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
@@ -100,7 +100,7 @@
             })
         })
 
-        function show_alert(Mensaje) {
+        function show_alert (Mensaje) {
             Swal.fire({
                 icon: 'success',
                 title: Mensaje,
@@ -109,7 +109,7 @@
             });
         }
 
-        function delete_alert(id) {
+        function delete_alert (id) {
             Swal.fire({
                 title: 'Un registro será borrado',
                 text: '¿Desea eliminar el registro permanentemente?',
@@ -119,8 +119,9 @@
                 cancelButtonColor: "#a3a3a3",
                 confirmButtonText: 'Continuar',
                 cancelButtonText: 'Cancelar'
-            }).then(function(result) {
-                if (result.value) {
+            }).then(function (result) {
+                if (result.value)
+                {
                     Livewire.dispatch('delete', {
                         record: id
                     })
