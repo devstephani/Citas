@@ -3,7 +3,7 @@
 <section class="testimonials-area pb-100">
     <div class="container">
         <div class="section-title">
-            <span>Testimonials</span>
+            <span>Testimonios</span>
             <h2>Nuestros clientes dicen</h2>
         </div>
         <div class="testimonials-wrap owl-carousel owl-theme">

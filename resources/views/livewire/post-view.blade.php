@@ -9,27 +9,27 @@
                 <div class="flex flex-col">
                     <h1 class="text-2xl">{{ $post->title }}</h1>
                     <span>Publicado {{ $post->created_at->diffForHumans() }}</span>
-                    @if (Auth::user()->hasRole('admin'))
-                        <div class="flex gap-3">
-                            @php
-                                $reactions = $post->get_reactions();
-                            @endphp
-                            <p class="inline-flex items-center gap-3">
-                                {{ $reactions[0] }}
-                                <x-lucide-thumbs-up class="w-4 h-4" />
-                            </p>
-                            <p class="inline-flex items-center gap-3">
-                                {{ $reactions[1] }}
-                                <x-lucide-thumbs-down class="w-4 h-4" />
-                            </p>
-                            <p class="inline-flex items-center gap-3">
-                                {{ count($post->comments) }}
-                                <x-lucide-message-circle class="w-4 h-4" />
-                            </p>
-                        </div>
+                    @if (Auth::user() && Auth::user()->hasRole('admin'))
+                                        <div class="flex gap-3">
+                                            @php
+                                                $reactions = $post->get_reactions();
+                                            @endphp
+                                            <p class="inline-flex items-center gap-3">
+                                                {{ $reactions[0] }}
+                                                <x-lucide-thumbs-up class="w-4 h-4" />
+                                            </p>
+                                            <p class="inline-flex items-center gap-3">
+                                                {{ $reactions[1] }}
+                                                <x-lucide-thumbs-down class="w-4 h-4" />
+                                            </p>
+                                            <p class="inline-flex items-center gap-3">
+                                                {{ count($post->comments) }}
+                                                <x-lucide-message-circle class="w-4 h-4" />
+                                            </p>
+                                        </div>
                     @endif
                 </div>
-                <a href="{{ Auth::user()->hasRole('admin') ? route('posts') : route('home') }}">
+                <a href="{{ Auth::user() && Auth::user()->hasRole('admin') ? route('posts') : route('home') }}">
                     <x-button type="button" class="w-fit">
                         <x-lucide-arrow-left class="w-5 h-5" />
                         Volver
@@ -37,33 +37,33 @@
                 </a>
             </div>
 
-            @if (!Auth::user()->hasRole('admin'))
-                <div class="flex gap-3">
-                    <x-button type="button" wire:click="dispatch('toggle_rate', { rate: 1 })"
-                        class="bg-transparent border focus:ring-0 border-neutral-400 !rounded-full">
-                        <x-lucide-thumbs-up @class([
-                            'w-5 h-5',
-                            'text-black' => $my_rate === null || $my_rate === 0,
-                            'text-blue-600' => $my_rate === 1,
-                        ]) />
-                    </x-button>
-                    <x-button type="button" wire:click="dispatch('toggle_rate', { rate: 0 })"
-                        class="bg-transparent border focus:ring-0 border-neutral-400 !rounded-full">
-                        <x-lucide-thumbs-down @class([
-                            'w-5 h-5',
-                            'text-black' => $my_rate === null || $my_rate === 1,
-                            'text-red-600' => $my_rate === 0,
-                        ]) />
-                    </x-button>
-                    <x-button type="button" wire:click="dispatch('mark_favorite')"
-                        class="bg-transparent border focus:ring-0 border-neutral-400 !rounded-full">
-                        <x-lucide-star @class([
-                            'w-5 h-5',
-                            'text-black' => !$post->favorites()->exists('user_id', auth()->id()),
-                            'text-yellow-600' => $post->favorites()->exists('user_id', auth()->id()),
-                        ]) />
-                    </x-button>
-                </div>
+            @if (Auth::user() && !Auth::user()->hasRole('admin'))
+                        <div class="flex gap-3">
+                            <x-button type="button" wire:click="dispatch('toggle_rate', { rate: 1 })"
+                                class="bg-transparent border focus:ring-0 border-neutral-400 !rounded-full">
+                                <x-lucide-thumbs-up @class([
+                                    'w-5 h-5',
+                                    'text-black' => $my_rate === null || $my_rate === 0,
+                                    'text-blue-600' => $my_rate === 1,
+                                ]) />
+                            </x-button>
+                            <x-button type="button" wire:click="dispatch('toggle_rate', { rate: 0 })"
+                                class="bg-transparent border focus:ring-0 border-neutral-400 !rounded-full">
+                                <x-lucide-thumbs-down @class([
+                                    'w-5 h-5',
+                                    'text-black' => $my_rate === null || $my_rate === 1,
+                                    'text-red-600' => $my_rate === 0,
+                                ]) />
+                            </x-button>
+                            <x-button type="button" wire:click="dispatch('mark_favorite')"
+                                class="bg-transparent border focus:ring-0 border-neutral-400 !rounded-full">
+                                <x-lucide-star @class([
+                                    'w-5 h-5',
+                                    'text-black' => !$post->favorites()->exists('user_id', auth()->id()),
+                                    'text-yellow-600' => $post->favorites()->exists('user_id', auth()->id()),
+                                ]) />
+                            </x-button>
+                        </div>
             @endif
         </div>
 
@@ -120,8 +120,7 @@
                 @if (!Auth::user()->hasRole('admin') && ($first_comment || $can_comment))
                     <div class="mt-5 block">
                         <x-label value="Comentario" for="comment" />
-                        <x-textarea wire:model.lazy="comment" id="comment" name="comment" class="w-full"
-                            required></x-textarea>
+                        <x-textarea wire:model.lazy="comment" id="comment" name="comment" class="w-full" required></x-textarea>
                         @if ($comment_id > 0)
                             <x-button type="button" wire:click="update_comment()">Actualizar</x-button>
                         @else

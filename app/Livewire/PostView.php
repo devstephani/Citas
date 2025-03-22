@@ -43,10 +43,12 @@ class PostView extends Component
         $this->first_comment = $this->comment_id <= 0;
         $this->can_comment = false;
 
-        if (Auth::user()->hasRole('admin')) {
-            $this->post->comments = $this->post->comments()->get();
-        } else {
-            $this->post->comments = $this->post->comments()->where('active', 1)->get();
+        if (Auth::user()) {
+            if (Auth::user()->hasRole('admin')) {
+                $this->post->comments = $this->post->comments()->get();
+            } else {
+                $this->post->comments = $this->post->comments()->where('active', 1)->get();
+            }
         }
     }
 
@@ -111,7 +113,7 @@ class PostView extends Component
     public function toggle_comment_active(Comment $record)
     {
         $record->update([
-            'active' => ! $record->active
+            'active' => !$record->active
         ]);
     }
 

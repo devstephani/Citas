@@ -49,7 +49,7 @@
                 @foreach ($employees as $employee)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img src="{{ $employee->get_image() }}" class="size-20 rounded-md" />
+                            <img src="{{ $employee->get_image() }}" class="h-20 w-20 rounded-md" />
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $employee->user->name }}

@@ -32,6 +32,7 @@
                             <tr>
                                 <th class="table-th text-center text-white">Tipo</th>
                                 <th class="table-th text-center text-white">Nombre</th>
+                                <th class="table-th text-center text-white">Cédula</th>
                                 <th class="table-th text-center text-white">Fecha</th>
                             </tr>
                         </thead>
@@ -45,7 +46,10 @@
                                         <h6>{{ $attendance->employee->user->name }}</h6>
                                     </td>
                                     <td class="text-center">
-                                        <h6>{{ $attendance->created_at->format('d-m-Y h:i a') }}
+                                        <h6>{{ $attendance->employee->user->identification }}</h6>
+                                    </td>
+                                    <td class="text-center">
+                                        <h6>{{ $attendance->created_at->format('d-m-Y H:i a') }}
                                         </h6>
                                     </td>
                             @endforeach

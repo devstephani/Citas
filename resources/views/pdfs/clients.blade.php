@@ -32,6 +32,7 @@
                         <thead class="text-white" style="background: #3b3f5c">
                             <tr>
                                 <th class="table-th text-center text-white">Nombre</th>
+                                <th class="table-th text-center text-white">CÉDULA</th>
                                 <th class="table-th text-center text-white">Correo</th>
                                 <th class="table-th text-center text-white">Activo</th>
                                 <th class="table-th text-center text-white">Registrado</th>
@@ -42,6 +43,10 @@
                                 <tr>
                                     <td>
                                         <h6>{{ $client->name }}
+                                        </h6>
+                                    </td>
+                                    <td>
+                                        <h6>{{ $client->identification }}
                                         </h6>
                                     </td>
                                     <td>

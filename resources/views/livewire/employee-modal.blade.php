@@ -99,7 +99,7 @@
                         <div class="block">
                             <x-label value="Teléfono" for="phone" />
                             <x-input placeholder="Ej: 04125121212" wire:model.lazy="phone" type="number"
-                                id="phone" name="phone" class="w-full" autofocus autocomplete="off" required />
+                                id="phone" name="phone" class="w-full" required />
                             <x-input-error for="phone" class="mt-2" />
                         </div>
                         <div class="block">

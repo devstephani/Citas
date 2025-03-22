@@ -36,6 +36,7 @@ class Employee extends Component
     {
         $image = base64_encode(file_get_contents(public_path('img/logo.jpg')));
         $attendances = Attendance::all();
+
         return response()->streamDownload(function () use ($attendances, $image) {
             $pdf = App::make('dompdf.wrapper');
             $pdf->loadView('pdfs.employee', [
