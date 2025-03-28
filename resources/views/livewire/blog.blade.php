@@ -11,6 +11,10 @@
                 <h2>Noticias y artículos de belleza</h2>
                 <span>Nuestro BLog</span>
             </div>
+            <video class="w-full mb-6" controls>
+                <source src="{{ asset('videos/blog.mp4') }}" type="video/mp4">
+                Su navegador no soporta este video
+            </video>
             @if (count($favorites) > 0)
                 <div class="row">
                     <h1 class="font-bold text-2xl">Favoritos</h1>
@@ -30,7 +34,7 @@
                                         </div>
                                         <div class="-mt-5 flex gap-3">
                                             @php
-                                                $reactions = $favorite->get_reactions();
+        $reactions = $favorite->get_reactions();
                                             @endphp
                                             <p class="inline-flex items-center gap-3">
                                                 {{ $reactions[0] }}
@@ -76,7 +80,7 @@
                                     </div>
                                     <div class="-mt-5 flex gap-3">
                                         @php
-                                            $reactions = $post->get_reactions();
+    $reactions = $post->get_reactions();
                                         @endphp
                                         <p class="inline-flex items-center gap-3">
                                             {{ $reactions[0] }}

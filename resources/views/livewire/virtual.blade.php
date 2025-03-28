@@ -176,7 +176,16 @@
             </div>
 
         </div>
+
+        <section class="max-w-screen-lg mt-5 pb-20 w-full mx-auto">
+            <video class="w-full" controls>
+                <source src="{{ asset('videos/probador.mp4') }}" type="video/mp4">
+                Su navegador no soporta este video
+            </video>
+        </section>
     </div>
+
+    
 
     <style>
         .custom-file-upload {

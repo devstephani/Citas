@@ -11,6 +11,10 @@
                     <h2>Disfruta de nuestros paquetes</h2>
                     <span>Paquetes</span>
                 </div>
+                <video class="w-full mb-6" controls>
+                    <source src="{{ asset('videos/paquete.mp4') }}" type="video/mp4">
+                    Su navegador no soporta este video
+                </video>
                 <div class="row">
                     @foreach ($packages as $package)
                         <div class="col-lg-4 col-sm-6">
@@ -25,10 +29,10 @@
                                         </a>
                                     </span>
                                     @php
-                                        $stars = round(
-                                            $package->appointments()->whereNotNull('stars')->avg('stars'),
-                                            2,
-                                        );
+    $stars = round(
+        $package->appointments()->whereNotNull('stars')->avg('stars'),
+        2,
+    );
                                     @endphp
                                     <div class="flex items-center gap-3">
                                         <x-lucide-star class="w-5 h-5 fill-yellow-400" />
